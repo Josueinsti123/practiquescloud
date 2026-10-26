@@ -75,7 +75,7 @@ variable "availability_zone" {
 }
 
 variable "ssh_cidr" {
-  description = "CIDR autoritzat a connectar-se per SSH (millor restringir-ho a la IP pròpia)"
+  description = "CIDR autoritzat a connectar-se a les instàncies (SSH, HTTP i ICMP). Millor restringir-ho a la IP pròpia"
   type        = string
   default     = "0.0.0.0/0"
 }
@@ -129,13 +129,21 @@ data "aws_subnet" "selected" {
 # ---------------------------------------------------------------------------
 resource "aws_security_group" "ec2" {
   name        = "${var.project_name}-pt1-4-ex1-sg"
-  description = "Acces SSH i ICMP per a les instancies de l'exercici 1"
+  description = "Acces SSH i ICMP per a les instancies de l exercici 1"
   vpc_id      = data.aws_vpc.default.id
 
   ingress {
     description = "SSH"
     from_port   = 22
     to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = [var.ssh_cidr]
+  }
+
+  ingress {
+    description = "HTTP"
+    from_port   = 80
+    to_port     = 80
     protocol    = "tcp"
     cidr_blocks = [var.ssh_cidr]
   }

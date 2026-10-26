@@ -34,7 +34,7 @@ Terraform crea els recursos següents dins de la **VPC per defecte** del compte
 |---|---|---|
 | Instància EC2 1 | `practiquescloud-pt1-4-ex1-ec2-1` | `t3.micro`, Amazon Linux 2023, IP pública |
 | Instància EC2 2 | `practiquescloud-pt1-4-ex1-ec2-2` | `t3.micro`, Amazon Linux 2023, IP pública |
-| Security Group | `practiquescloud-pt1-4-ex1-sg` | Ingress TCP 22 (SSH) i ICMP; egress total |
+| Security Group | `practiquescloud-pt1-4-ex1-sg` | Ingress TCP 22 (SSH), TCP 80 (HTTP) i ICMP; egress total |
 | Subxarxa | Subxarxa per defecte de `us-east-1a` | Assignada automàticament pel compte |
 | AMI | `al2023-ami-2023.*-x86_64` | Sempre la versió més recent publicada per Amazon |
 | Regió | `us-east-1` | Definida a la variable `aws_region` |
@@ -147,6 +147,25 @@ public_ips   = ["54.x.x.x", "3.x.x.x"]
 private_ips  = ["172.31.x.x", "172.31.x.x"]
 ```
 
+### Resultat obtingut en aquest desplegament
+
+| Recurs | ID | Tipus | AZ | IP privada | IP pública |
+|---|---|---|---|---|---|
+| `practiquescloud-pt1-4-ex1-ec2-1` | `i-017b8dde013461720` | `t3.micro` | `us-east-1a` | `172.31.93.120` | `18.234.198.154` |
+| `practiquescloud-pt1-4-ex1-ec2-2` | `i-0e76ece4f6ad0d514` | `t3.micro` | `us-east-1a` | `172.31.88.240` | `54.226.98.36` |
+
+AMI Amazon Linux 2023 utilitzada: `ami-04b938437b69a2c9c`.
+
+Comprovació HTTP de les dues instàncies:
+
+```text
+$ curl http://18.234.198.154
+<h1>Pt1.4 Exercici 1 - EC2 1 (t3.micro)</h1>
+
+$ curl http://54.226.98.36
+<h1>Pt1.4 Exercici 1 - EC2 2 (t3.micro)</h1>
+```
+
 ### Pas 5 — Comprovar el desplegament
 
 Amb l'AWS CLI:
@@ -191,8 +210,8 @@ terraform destroy
   de fer servir un AMI ID fix, que canvia segons la regió i el temps.
 - **`data "aws_vpc"` / `data "aws_subnet"`:** utilitzen la VPC i la subxarxa per defecte
   del compte a `us-east-1a`; l'enunciat no demana crear una VPC pròpia en aquest exercici.
-- **`aws_security_group`:** només obre SSH (22) i ICMP; l'origen es pot limitar amb la
-  variable `ssh_cidr`.
+- **`aws_security_group`:** obre SSH (22), HTTP (80) i ICMP; l'origen es pot limitar amb
+  la variable `ssh_cidr`.
 - **`aws_instance`:** `count = 2`, `t3.micro`, AMI Amazon Linux 2023, `user_data` amb
   Apache i tags `Name` numerats (`ec2-1`, `ec2-2`).
 - **`outputs`:** IDs, IPs públiques i privades, regió i AMI emprada.
@@ -223,6 +242,8 @@ terraform apply -var="ssh_cidr=203.0.113.10/32"
 | `VcpuLimitExceeded` | Límit de vCPUs del compte | Reduir `instance_count` o demanar augment de quota |
 | `no matching EC2 Subnet found` | La regió no té subxarxa a `us-east-1a` | Canviar `availability_zone` |
 | Error de versió del proveïdor | Versió d'AWS provider antiga | `terraform init -upgrade` |
+| `InvalidParameterValue: Invalid security group description` | La descripció contenia un apòstrof (`'`), caràcter no permès per AWS | Escriure la descripció sense apòstrofs (`l exercici`) |
+| La pàgina web no respon | El Security Group no obria el port 80 | Afegir l'ingress TCP 80 i tornar a fer `terraform apply` |
 
 ---
 
