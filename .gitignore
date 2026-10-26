@@ -1,0 +1,26 @@
+# Terraform
+.terraform/
+.terraform.lock.hcl.bak
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+*.tfvars
+*.tfvars.json
+!example.tfvars
+
+# AWS
+.aws/
+*.pem
+
+# Entorn
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
