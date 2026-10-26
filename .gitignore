@@ -1,0 +1,86 @@
+###############################################################################
+# .gitignore — practiquescloud
+# Objectiu: no pujar mai credencials ni fitxers generats al repositori públic.
+###############################################################################
+
+# ---------------------------------------------------------------------------
+# CREDENCIALS I SECRETS (prioritat màxima)
+# ---------------------------------------------------------------------------
+.aws/
+.aws/*
+.aws/config
+.aws/credentials
+*.pem
+*.ppk
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+.env
+.env.*
+!.env.example
+credentials
+credentials.*
+*credentials*
+secrets.*
+secrets/
+*.secret
+*.token
+*_rsa
+id_rsa
+id_dsa
+id_ecdsa
+id_ed25519
+*.tfvars
+*.tfvars.json
+!example.tfvars
+
+# ---------------------------------------------------------------------------
+# Terraform
+# ---------------------------------------------------------------------------
+.terraform/
+**/.terraform/*
+.terraform.lock.hcl
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+terraform.tfstate.d/
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+*.tfplan
+*.plan
+
+# ---------------------------------------------------------------------------
+# AWS CLI / Sessions
+# ---------------------------------------------------------------------------
+.aws-sam/
+aws-exports.js
+*.session
+
+# ---------------------------------------------------------------------------
+# Sistema operatiu i editors
+# ---------------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+*.code-workspace
+
+# ---------------------------------------------------------------------------
+# Logs i temporals
+# ---------------------------------------------------------------------------
+*.log
+tmp/
+temp/
+*.bak
+*.orig
+*.zip
