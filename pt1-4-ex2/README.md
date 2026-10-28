@@ -137,27 +137,27 @@ terraform destroy -auto-approve
 
 ### Resultat obtingut en aquest desplegament
 
-**VPC:** `vpc-08c11f3bccc56120b` (`10.0.0.0/16`, `us-east-1`)
+**VPC:** `vpc-0c2833554f299c9ed` (`10.0.0.0/16`, `us-east-1`)
 
 | Subxarxa | ID | CIDR | AZ | IPs disponibles |
 |---|---|---|---|---|
-| A | `subnet-0b54e1de382797885` | `10.0.32.0/25` | `us-east-1a` | 121 |
-| B | `subnet-09e90b11ce92016ca` | `10.0.30.0/23` | `us-east-1a` | 505 |
-| C | `subnet-0fa8451a771761e4a` | `10.0.33.0/28` | `us-east-1a` | 9 |
+| A | `subnet-0c33eb9dec0a3259f` | `10.0.32.0/25` | `us-east-1a` | 121 |
+| B | `subnet-0527b1c46a78e8b21` | `10.0.30.0/23` | `us-east-1a` | 505 |
+| C | `subnet-01cb7837edf411799` | `10.0.33.0/28` | `us-east-1a` | 9 |
 
-**Internet Gateway:** `igw-02da920c12d7d8275` · **Taula de rutes:** `rtb-09fb5103a61852057`
-(`0.0.0.0/0 → igw-02da920c12d7d8275`)
+**Internet Gateway:** `igw-0e861bc5eb876c572` · **Taula de rutes:** `rtb-0171701ba6faf46a0`
+(`0.0.0.0/0 → igw-0e861bc5eb876c572`)
 
 **6 instàncies EC2 en execució:**
 
 | Nom | ID | Subxarxa | IP privada | IP pública |
 |---|---|---|---|---|
-| `...-A-ec2-1` | `i-095ceb529285018ca` | A | `10.0.32.63` | `3.87.200.205` |
-| `...-A-ec2-2` | `i-00e770e574b089b76` | A | `10.0.32.16` | `13.223.57.239` |
-| `...-B-ec2-1` | `i-02b3a633fbfe1e99b` | B | `10.0.30.156` | `3.82.114.217` |
-| `...-B-ec2-2` | `i-08431e12307857f3c` | B | `10.0.30.80` | `54.152.54.66` |
-| `...-C-ec2-1` | `i-012e38486c982934c` | C | `10.0.33.4` | `54.145.165.18` |
-| `...-C-ec2-2` | `i-00c7536171e26264f` | C | `10.0.33.10` | `54.205.247.19` |
+| `A-ec2-1` | `i-0ce9846dac5c33c61` | A | `10.0.32.14` | `100.53.87.89` |
+| `A-ec2-2` | `i-07e644d0a6cdf8968` | A | `10.0.32.79` | `44.205.252.86` |
+| `B-ec2-1` | `i-04b377f3031aa023e` | B | `10.0.31.200` | `3.93.246.191` |
+| `B-ec2-2` | `i-0248fc9105be84c9e` | B | `10.0.31.101` | `3.86.114.141` |
+| `C-ec2-1` | `i-064c23b4600ab0c29` | C | `10.0.33.6` | `100.53.88.135` |
+| `C-ec2-2` | `i-0362b7f1908170d52` | C | `10.0.33.4` | `54.227.83.231` |
 
 S'ha comprovat l'accés HTTP a les 6 màquines amb `curl`, obtenint la pàgina servida per
 Apache a cadascuna (`Pt1.4 Ex2 - Subnet X - EC2 Y`).

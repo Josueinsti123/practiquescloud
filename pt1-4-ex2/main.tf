@@ -45,66 +45,13 @@ provider "aws" {
 # ---------------------------------------------------------------------------
 # Variables
 # ---------------------------------------------------------------------------
-variable "aws_region" {
-  description = "Regió d'AWS"
-  type        = string
-  default     = "us-east-1"
-}
 
-variable "availability_zone" {
-  description = "Zona de disponibilitat on es creen les 3 subxarxes"
-  type        = string
-  default     = "us-east-1a"
-}
 
-variable "project_name" {
-  description = "Nom del projecte"
-  type        = string
-  default     = "practiquescloud"
-}
 
-variable "vpc_cidr" {
-  description = "Adreçament de la VPC"
-  type        = string
-  default     = "10.0.0.0/16"
-}
 
-variable "instance_type" {
-  description = "Tipus d'instància EC2"
-  type        = string
-  default     = "t3.micro"
-}
 
-variable "instances_per_subnet" {
-  description = "Nombre d'instàncies EC2 per cada subxarxa"
-  type        = number
-  default     = 2
-}
 
-variable "ssh_cidr" {
-  description = "CIDR autoritzat a connectar-se per SSH"
-  type        = string
-  default     = "0.0.0.0/0"
-}
 
-variable "public_subnets" {
-  description = "Subxarxes públiques de la VPC (clau = nom, valor = CIDR)"
-  type = map(object({
-    cidr_block = string
-    az         = string
-  }))
-
-  default = {
-    A = { cidr_block = "10.0.32.0/25", az = "us-east-1a" }
-    B = { cidr_block = "10.0.30.0/23", az = "us-east-1a" }
-    C = { cidr_block = "10.0.33.0/28", az = "us-east-1a" }
-  }
-
-  validation {
-    condition     = length(var.public_subnets) == 3
-    error_message = "L'enunciat demana exactament 3 subxarxes."
-  }
-}
 
 # ---------------------------------------------------------------------------
 # AMI: Amazon Linux 2023
@@ -143,7 +90,7 @@ resource "aws_vpc" "main" {
   enable_dns_hostnames = true
 
   tags = {
-    Name = "${var.project_name}-pt1-4-ex2-vpc"
+    Name = "vpc"
   }
 }
 
@@ -159,7 +106,7 @@ resource "aws_subnet" "public" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "${var.project_name}-pt1-4-ex2-subnet-${each.key}"
+    Name = "subnet-${each.key}"
     Tier = "public"
   }
 }
@@ -199,7 +146,7 @@ resource "aws_route_table_association" "public" {
 # Grup de seguretat
 # ---------------------------------------------------------------------------
 resource "aws_security_group" "web" {
-  name        = "${var.project_name}-pt1-4-ex2-sg"
+  name        = "sg"
   description = "SSH, HTTP i ICMP per a les 6 instancies de l exercici 2"
   vpc_id      = aws_vpc.main.id
 
@@ -236,7 +183,7 @@ resource "aws_security_group" "web" {
   }
 
   tags = {
-    Name = "${var.project_name}-pt1-4-ex2-sg"
+    Name = "sg"
   }
 }
 
@@ -271,7 +218,7 @@ resource "aws_instance" "web" {
   EOF
 
   tags = {
-    Name   = "${var.project_name}-pt1-4-ex2-${each.value.subnet_key}-ec2-${each.value.number}"
+    Name   = "${each.value.subnet_key}-ec2-${each.value.number}"
     Subnet = each.value.subnet_key
   }
 }

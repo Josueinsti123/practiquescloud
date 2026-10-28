@@ -39,46 +39,11 @@ provider "aws" {
 # ---------------------------------------------------------------------------
 # Variables
 # ---------------------------------------------------------------------------
-variable "aws_region" {
-  description = "Regió d'AWS on es despleguen els recursos"
-  type        = string
-  default     = "us-east-1"
-}
 
-variable "project_name" {
-  description = "Nom del projecte (s'utilitza als tags i als noms dels recursos)"
-  type        = string
-  default     = "practiquescloud"
-}
 
-variable "instance_type" {
-  description = "Tipus d'instància EC2"
-  type        = string
-  default     = "t3.micro"
-}
 
-variable "instance_count" {
-  description = "Nombre d'instàncies EC2 a crear"
-  type        = number
-  default     = 2
 
-  validation {
-    condition     = var.instance_count > 0
-    error_message = "Cal crear com a mínim una instància EC2."
-  }
-}
 
-variable "availability_zone" {
-  description = "Zona de disponibilitat de la subxarxa per defecte on es creen les instàncies"
-  type        = string
-  default     = "us-east-1a"
-}
-
-variable "ssh_cidr" {
-  description = "CIDR autoritzat a connectar-se a les instàncies (SSH, HTTP i ICMP). Millor restringir-ho a la IP pròpia"
-  type        = string
-  default     = "0.0.0.0/0"
-}
 
 # ---------------------------------------------------------------------------
 # AMI: Amazon Linux 2023 (x86_64) - sempre la més recent
@@ -128,7 +93,7 @@ data "aws_subnet" "selected" {
 # Grup de seguretat (SSH + ICMP)
 # ---------------------------------------------------------------------------
 resource "aws_security_group" "ec2" {
-  name        = "${var.project_name}-pt1-4-ex1-sg"
+  name        = "sg"
   description = "Acces SSH i ICMP per a les instancies de l exercici 1"
   vpc_id      = data.aws_vpc.default.id
 
@@ -165,7 +130,7 @@ resource "aws_security_group" "ec2" {
   }
 
   tags = {
-    Name = "${var.project_name}-pt1-4-ex1-sg"
+    Name = "sg"
   }
 }
 
@@ -189,7 +154,7 @@ resource "aws_instance" "web" {
   EOF
 
   tags = {
-    Name = "${var.project_name}-pt1-4-ex1-ec2-${count.index + 1}"
+    Name = "ec2-${count.index + 1}"
   }
 
   lifecycle {

@@ -151,18 +151,18 @@ private_ips  = ["172.31.x.x", "172.31.x.x"]
 
 | Recurs | ID | Tipus | AZ | IP privada | IP pública |
 |---|---|---|---|---|---|
-| `practiquescloud-pt1-4-ex1-ec2-1` | `i-017b8dde013461720` | `t3.micro` | `us-east-1a` | `172.31.93.120` | `18.234.198.154` |
-| `practiquescloud-pt1-4-ex1-ec2-2` | `i-0e76ece4f6ad0d514` | `t3.micro` | `us-east-1a` | `172.31.88.240` | `54.226.98.36` |
+| `ec2-1` | `i-02269a6085132931a` | `t3.micro` | `us-east-1a` | `172.31.88.56` | `54.152.65.102` |
+| `ec2-2` | `i-0717078af58b1e630` | `t3.micro` | `us-east-1a` | `172.31.87.37` | `98.94.40.192` |
 
 AMI Amazon Linux 2023 utilitzada: `ami-04b938437b69a2c9c`.
 
 Comprovació HTTP de les dues instàncies:
 
 ```text
-$ curl http://18.234.198.154
+$ curl http://54.152.65.102
 <h1>Pt1.4 Exercici 1 - EC2 1 (t3.micro)</h1>
 
-$ curl http://54.226.98.36
+$ curl http://98.94.40.192
 <h1>Pt1.4 Exercici 1 - EC2 2 (t3.micro)</h1>
 ```
 
