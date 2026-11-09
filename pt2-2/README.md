@@ -51,6 +51,12 @@ a Internet i desplegar-hi 2 instàncies EC2 amb el parell de claus `vockey`.
 
 > Diagrama fet amb **draw.io** (font editable: `assets/topologia.drawio`).
 
+### Captures de la consola d'AWS (evidències del desplegament)
+
+- VPC-03, subxarxes, Internet Gateway i taula de rutes: `assets/vpc_subnets.png`
+- Security Group (regles SSH/ICMP/egress): `assets/security_group.png`
+- 2 instàncies EC2 en execució (`ec2-a`, `ec2-b`): `assets/instances.png`
+
 ---
 
 ## 3. Estructura del repositori
