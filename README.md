@@ -11,6 +11,7 @@ Cada pràctica té la seva pròpia carpeta amb el codi d'Infraestructura com a C
 |---|---|---|
 | Pt1.4 — Exercici 1 | 2 instàncies EC2 `t3.micro` amb Amazon Linux 2023 a `us-east-1` | [`pt1-4-ex1/`](pt1-4-ex1/) |
 | Pt1.4 — Exercici 2 | VPC `10.0.0.0/16`, 3 subxarxes i 6 instàncies EC2 amb Terraform | [`pt1-4-ex2/`](pt1-4-ex2/) |
+| Pt2.2 | VPC `VPC-03` (`10.0.0.0/16`), 2 subxarxes públiques i 2 instàncies EC2 amb clau `vockey` | [`pt2-2/`](pt2-2/) |
 
 ## Requisits
 
